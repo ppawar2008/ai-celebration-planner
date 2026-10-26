@@ -335,7 +335,7 @@ Do not claim that vendors or bookings are confirmed.
             from google import genai
             client = genai.Client(api_key=api_key)
             response = client.models.generate_content(
-                model="gemini-2.5-flash",
+                model="gemini-3.8-flash",
                 contents=prompt
             )
             ai_text = response.text or ""
