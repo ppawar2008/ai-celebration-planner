@@ -339,11 +339,12 @@ Do not claim that vendors or bookings are confirmed.
                 contents=prompt
             )
             ai_text = response.text or ""
+      
+        
         except Exception as e:
-            st.warning(
-                "Gemini could not respond. Showing demo suggestions instead. "
-                "Check your API key and package settings."
-            )
+               st.error(f"Gemini error type: {type(e).__name__}")
+               st.error(f"Error details: {e}")
+                
 
     if ai_text.strip():
         st.session_state.plan = {
