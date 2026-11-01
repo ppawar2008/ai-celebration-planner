@@ -1,8 +1,15 @@
 
+import math
+
+
 def calculate_budget(budget):
     """Calculate estimated event budget allocations."""
-    if not isinstance(budget, (int, float)):
+
+    if isinstance(budget, bool) or not isinstance(budget, (int, float)):
         raise TypeError("Budget must be a number.")
+
+    if not math.isfinite(budget):
+        raise ValueError("Budget must be a finite number.")
 
     if budget < 500:
         raise ValueError("Budget must be at least ₹500.")
@@ -17,6 +24,12 @@ def calculate_budget(budget):
 
 def get_demo_ideas(kind, chosen_theme, guests, special):
     """Generate built-in event suggestions."""
+
+    if isinstance(guests, bool) or not isinstance(guests, int):
+        raise TypeError("Guests must be a whole number.")
+
+    if guests < 1:
+        raise ValueError("Guests must be at least 1.")
 
     ideas = {
         "Birthday Party": [
@@ -63,9 +76,12 @@ def get_demo_ideas(kind, chosen_theme, guests, special):
 
     result = ideas.get(kind, ideas["Other Celebration"])
 
-    result = result + [
+    if chosen_theme and chosen_theme != "Surprise me":
+        result.append(f"Use the {chosen_theme} theme for event decorations.")
+
+    result.append(
         f"Plan for approximately {guests} guests and stay within budget."
-    ]
+    )
 
     if special and special.strip():
         result.append(f"Special request: {special.strip()}.")
