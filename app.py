@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.express as px
 from datetime import date, time
 from io import BytesIO
+from planner_utils import calculate_budget, get_demo_ideas
 
 st.set_page_config(
     page_title="Celebrate AI | Event Planner",
@@ -204,12 +205,7 @@ with st.container(border=True):
 st.markdown('<div class="section-title">💰 Your budget at a glance</div>',
             unsafe_allow_html=True)
 
-allocations = {
-    "Venue": budget * 0.30,
-    "Food & Drinks": budget * 0.35,
-    "Decorations": budget * 0.20,
-    "Other": budget * 0.15
-}
+allocations = calculate_budget(budget)
 
 m1, m2, m3, m4 = st.columns(4)
 m1.metric("🏛️ Venue", f"₹{allocations['Venue']:,.0f}")
@@ -245,56 +241,6 @@ st.plotly_chart(fig, use_container_width=True)
 st.caption("Budget allocations are estimates. Actual costs may differ.")
 
 # ---------- EVENT PLAN ----------
-def get_demo_ideas(kind, chosen_theme, guests, special):
-    ideas = {
-        "Birthday Party": [
-            "Create a photo backdrop and a memorable cake table.",
-            "Plan music, party games, and a group photo moment.",
-            "Send invitations and confirm the guest list."
-        ],
-        "College Fest": [
-            "Prepare a stage schedule and assign volunteer roles.",
-            "Plan student activities and a registration desk.",
-            "Confirm sound, seating, and venue arrangements."
-        ],
-        "Farewell Party": [
-            "Create a memory wall with photos and messages.",
-            "Plan speeches, music, and a slideshow.",
-            "Arrange refreshments and a group photograph."
-        ],
-        "Anniversary": [
-            "Create a photo timeline of favourite memories.",
-            "Plan a meal and decorations that match the theme.",
-            "Prepare a short toast or memory-sharing activity."
-        ],
-        "Wedding": [
-            "Prepare a venue, guest, and vendor checklist.",
-            "Coordinate food, decorations, and event timings.",
-            "Assign a point of contact for each major task."
-        ],
-        "Graduation Party": [
-            "Create a graduation photo corner.",
-            "Plan short speeches and a celebration playlist.",
-            "Arrange snacks and a group photo."
-        ],
-        "Festival Celebration": [
-            "Choose decorations suitable for the festival.",
-            "Plan food, music, and inclusive group activities.",
-            "Make a checklist for setup and cleanup."
-        ],
-        "Other Celebration": [
-            "Choose a suitable venue and a clear event theme.",
-            "Plan food, decorations, and engaging activities.",
-            "Prepare invitations and an event-day schedule."
-        ]
-    }
-    result = ideas.get(kind, ideas["Other Celebration"])
-    result = result + [
-        f"Plan for approximately {guests} guests and keep spending within budget."
-    ]
-    if special.strip():
-        result.append(f"Special request to organise: {special.strip()}.")
-    return result
 
 if "plan" not in st.session_state:
     st.session_state.plan = None
