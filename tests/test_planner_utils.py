@@ -9,10 +9,10 @@ class TestBudget(unittest.TestCase):
     def test_budget_allocation(self):
         result = calculate_budget(10000)
 
-         self.assertAlmostEqual(result["Venue"], 3000)
-         self.assertAlmostEqual(result["Food & Drinks"], 3500)
-         self.assertAlmostEqual(result["Decorations"], 2000)
-         self.assertAlmostEqual(result["Other"], 1500)
+             self.assertAlmostEqual(result["Venue"], 3000)
+             self.assertAlmostEqual(result["Food & Drinks"], 3500)
+             self.assertAlmostEqual(result["Decorations"], 2000)
+             self.assertAlmostEqual(result["Other"], 1500)
 
     def test_invalid_budget(self):
         with self.assertRaises(ValueError):
